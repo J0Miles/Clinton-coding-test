@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './Form.css';
 
+const emailRegex = RegExp(
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+);
+
 const formValid = formErrors => {
   let valid = true;
 
@@ -31,18 +35,44 @@ class Form extends Component {
       },
       submitted: false
     };
-    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange = event => {
+    event.preventDefault();
     const { name, value } = event.target;
-    const { user } = this.state;
-    this.setState({
-      user: {
-        ...user,
-        [name]: value
-      }
-    });
+    let formErrors = this.state.formErrors;
+
+    console.log('Name: ', name);
+    console.log('Value: ', value);
+
+    switch (name) {
+      case 'firstName':
+        formErrors.firstName =
+          value.length < 3 && value.length > 0
+            ? 'minimum 3 characters required'
+            : '';
+        break;
+      case 'lastName':
+        formErrors.lastName =
+          value.length < 3 && value.length > 0
+            ? 'minimum 3 characters required'
+            : '';
+        break;
+      case 'email':
+        formErrors.email =
+          emailRegex.test(value) && value.length > 0
+            ? ''
+            : 'Invalid email address';
+        break;
+      case 'birthday':
+        formErrors.birthday =
+          value.length < 3 && value.length > 0
+            ? 'minimum 3 characters required'
+            : '';
+        break;
+      default:
+        break;
+    }
   };
 
   handleSubmit = event => {
@@ -64,54 +94,58 @@ class Form extends Component {
     return (
       <div className="wrapper">
         <div className="form-wrapper">
-          <form onSubmit={this.handleSubmit} validate>
-            <h1>Create Account</h1>
-            <div className="form-group">
+          <h1>Create Account</h1>
+          <form onSubmit={this.handleSubmit} noValidate>
+            <div className="firstName">
               <label htmlFor="firstName">First Name</label>
               <input
                 type="text"
-                className="form-control"
+                className=""
                 name="firstName"
                 placeholder="First Name"
                 onChange={this.handleChange}
+                noValidate
               />
             </div>
-            <div className="form-group">
+            <div className="lastName">
               <label htmlFor="lastName">Last Name</label>
               <input
                 type="text"
-                className="form-control"
+                className=""
                 name="lastName"
                 placeholder="Last Name"
                 onChange={this.handleChange}
+                noValidate
               />
             </div>
-            <div className="form-group m-sm">
+            <div className="email">
               <label htmlFor="email">Email address</label>
               <input
                 type="email"
-                className="form-control"
+                className=""
                 name="email"
                 placeholder="Email"
                 onChange={this.handleChange}
+                noValidate
               />
             </div>
-            <div className="form-group">
+            <div className="jobTitle">
               <label htmlFor="jobTitle">Job Title</label>
               <input
                 type="text"
-                className="form-control"
+                className=""
                 name="jobTitle"
                 placeholder="Job Title"
               />
             </div>
-            <div className="form-group">
+            <div className="birthday">
               <label htmlFor="birthday">Date of Birth</label>
               <input
                 type="date"
-                className="form-control"
+                className=""
                 name="birthday"
                 onChange={this.handleChange}
+                noValidate
               />
             </div>
             <div className="createAccount">
