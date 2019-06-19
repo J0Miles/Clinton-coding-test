@@ -8,7 +8,7 @@ const emailRegex = RegExp(
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
 
-  // Validate form erros being empty
+  // Validate form errors being empty
   Object.values(formErrors).forEach(val => {
     val.length > 0 && (valid = false);
   });
