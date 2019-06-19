@@ -12,7 +12,7 @@
   width: 400px;
   display: flex;
   flex-direction: column;
-  padding: 20px 40px;
+  padding: 20px 30px;
   border-radius: 10px;
   box-shadow: 0px 10px 50px #555;
   background-color: #ffffff;
@@ -23,9 +23,62 @@
 }
 
 form {
-  width: 90%;
-  margin-left: 15px;
+  width: 100%;
   flex-wrap: wrap;
+  border-radius: 6px !important;
+}
+
+label {
+  font-size: 0.9em;
+  margin-bottom: 0.25em;
+  color: #222;
+  font-weight: '200';
+}
+
+input {
+  padding: 4px 4px;
+  border-radius: 5px;
+  border-block-color: #fff;
+}
+.lastName {
+  margin-left: 1%;
+}
+
+.firstName,
+.lastName,
+.email,
+.jobTitle,
+.birthday {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.error {
+  border-color: red;
+}
+
+.firstName,
+.lastName {
+  width: 49%;
+  display: inline-flex !important;
+}
+
+.email,
+.jobTitle,
+.birthday {
+  width: 100%;
+}
+
+.email {
+  width: 100%;
+}
+
+.createAccount {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .createAccount button {
@@ -48,6 +101,6 @@ form {
 }
 
 .createAccount small {
-  color: #999;
+  color: rgb(77, 77, 77);
   font-weight: lighter;
 }

@@ -5,11 +5,17 @@ const emailRegex = RegExp(
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 );
 
-const formValid = formErrors => {
+const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
 
+  // Validate form erros being empty
   Object.values(formErrors).forEach(val => {
     val.length > 0 && (valid = false);
+  });
+
+  // Validate form was filled out
+  Object.values(rest).forEach(val => {
+    val === null && (valid = false);
   });
 
   return valid;
@@ -42,27 +48,20 @@ class Form extends Component {
     switch (name) {
       case 'firstName':
         formErrors.firstName =
-          value.length < 3 && value.length > 0
-            ? 'minimum 3 characters required'
-            : '';
+          value.length < 3 ? 'minimum 3 characters required' : '';
         break;
       case 'lastName':
         formErrors.lastName =
-          value.length < 3 && value.length > 0
-            ? 'minimum 3 characters required'
-            : '';
+          value.length < 3 ? 'minimum 3 characters required' : '';
         break;
       case 'email':
-        formErrors.email =
-          emailRegex.test(value) && value.length > 0
-            ? ''
-            : 'Invalid email address';
+        formErrors.email = emailRegex.test(value)
+          ? ''
+          : 'Invalid email address';
         break;
       case 'birthday':
         formErrors.birthday =
-          value.length < 3 && value.length > 0
-            ? 'minimum 3 characters required'
-            : '';
+          value.length < 3 ? 'Must be at least 18 years or older' : '';
         break;
       default:
         break;
@@ -74,7 +73,7 @@ class Form extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    if (formValid(this.state.formErrors)) {
+    if (formValid(this.state)) {
       console.log(`
       --SUBMITTING--
       First Name: ${this.state.firstName}
@@ -95,11 +94,11 @@ class Form extends Component {
         <div className="form-wrapper">
           <h1>Create Account</h1>
           <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
+            <div className="firstName">
               <label htmlFor="firstName">First Name</label>
               <input
                 type="text"
-                className="form-control"
+                className={formErrors.firstName.length > 0 ? 'error' : null}
                 name="firstName"
                 placeholder="First Name"
                 onChange={this.handleChange}
@@ -109,46 +108,55 @@ class Form extends Component {
                 <span className="errorMessage">{formErrors.firstName}</span>
               )}
             </div>
-            <div className="form-group">
+            <div className="lastName">
               <label htmlFor="lastName">Last Name</label>
               <input
                 type="text"
-                className="form-control"
+                className={formErrors.lastName.length > 0 ? 'error' : null}
                 name="lastName"
                 placeholder="Last Name"
                 onChange={this.handleChange}
                 noValidate
               />
+              {formErrors.lastName.length > 0 && (
+                <span className="errorMessage">{formErrors.lastName}</span>
+              )}
             </div>
-            <div className="form-group m-sm">
+            <div className="email">
               <label htmlFor="email">Email address</label>
               <input
                 type="email"
-                className="form-control"
+                className={formErrors.email.length > 0 ? 'error' : null}
                 name="email"
                 placeholder="Email"
                 onChange={this.handleChange}
                 noValidate
               />
+              {formErrors.email.length > 0 && (
+                <span className="errorMessage">{formErrors.email}</span>
+              )}
             </div>
-            <div className="form-group">
+            <div className="jobTitle">
               <label htmlFor="jobTitle">Job Title</label>
               <input
                 type="text"
-                className="form-control"
+                className=""
                 name="jobTitle"
                 placeholder="Job Title"
               />
             </div>
-            <div className="form-group">
+            <div className="birthday">
               <label htmlFor="birthday">Date of Birth</label>
               <input
                 type="date"
-                className="form-control"
+                className={formErrors.birthday.length > 0 ? 'error' : null}
                 name="birthday"
                 onChange={this.handleChange}
                 noValidate
               />
+              {formErrors.birthday.length > 0 && (
+                <span className="errorMessage">{formErrors.birthday}</span>
+              )}
             </div>
             <div className="createAccount">
               <button type="submit">Create Account</button>
