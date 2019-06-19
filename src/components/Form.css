@@ -18,8 +18,12 @@
   background-color: #ffffff;
 }
 
+.errorMessage {
+  color: red;
+}
+
 form {
-  width: 100%;
+  width: 90%;
   margin-left: 15px;
   flex-wrap: wrap;
 }

@@ -20,20 +20,17 @@ class Form extends Component {
     super(props);
 
     this.state = {
-      user: {
-        email: '',
+      firstName: null,
+      lastName: null,
+      email: null,
+      jobTitle: null,
+      birthday: null,
+      formErrors: {
         firstName: '',
         lastName: '',
-        jobTitle: '',
-        birthday: '',
-        formErrors: {
-          firstName: '',
-          lastName: '',
-          email: '',
-          birthday: ''
-        }
-      },
-      submitted: false
+        email: '',
+        birthday: ''
+      }
     };
   }
 
@@ -41,9 +38,6 @@ class Form extends Component {
     event.preventDefault();
     const { name, value } = event.target;
     let formErrors = this.state.formErrors;
-
-    console.log('Name: ', name);
-    console.log('Value: ', value);
 
     switch (name) {
       case 'firstName':
@@ -73,10 +67,13 @@ class Form extends Component {
       default:
         break;
     }
+
+    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
   };
 
   handleSubmit = event => {
     event.preventDefault();
+
     if (formValid(this.state.formErrors)) {
       console.log(`
       --SUBMITTING--
@@ -91,58 +88,63 @@ class Form extends Component {
   };
 
   render() {
+    const { formErrors } = this.state;
+
     return (
       <div className="wrapper">
         <div className="form-wrapper">
           <h1>Create Account</h1>
-          <form onSubmit={this.handleSubmit} noValidate>
-            <div className="firstName">
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group">
               <label htmlFor="firstName">First Name</label>
               <input
                 type="text"
-                className=""
+                className="form-control"
                 name="firstName"
                 placeholder="First Name"
                 onChange={this.handleChange}
                 noValidate
               />
+              {formErrors.firstName.length > 0 && (
+                <span className="errorMessage">{formErrors.firstName}</span>
+              )}
             </div>
-            <div className="lastName">
+            <div className="form-group">
               <label htmlFor="lastName">Last Name</label>
               <input
                 type="text"
-                className=""
+                className="form-control"
                 name="lastName"
                 placeholder="Last Name"
                 onChange={this.handleChange}
                 noValidate
               />
             </div>
-            <div className="email">
+            <div className="form-group m-sm">
               <label htmlFor="email">Email address</label>
               <input
                 type="email"
-                className=""
+                className="form-control"
                 name="email"
                 placeholder="Email"
                 onChange={this.handleChange}
                 noValidate
               />
             </div>
-            <div className="jobTitle">
+            <div className="form-group">
               <label htmlFor="jobTitle">Job Title</label>
               <input
                 type="text"
-                className=""
+                className="form-control"
                 name="jobTitle"
                 placeholder="Job Title"
               />
             </div>
-            <div className="birthday">
+            <div className="form-group">
               <label htmlFor="birthday">Date of Birth</label>
               <input
                 type="date"
-                className=""
+                className="form-control"
                 name="birthday"
                 onChange={this.handleChange}
                 noValidate
