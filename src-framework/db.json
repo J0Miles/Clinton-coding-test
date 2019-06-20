@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "jobTitle": "",
+      "birthday": ""
+    },
+    {
+      "id": 2,
+      "firstName": "Jordan",
+      "lastName": "Miles",
+      "email": "test@test.com",
+      "jobTitle": "Developer",
+      "birthday": "1901-01-01"
+    }
+  ]
+}

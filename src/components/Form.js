@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Form.css';
-import moment from 'react-moment';
 
 const emailRegex = RegExp(
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -44,7 +43,11 @@ class Form extends Component {
   handleChange = event => {
     event.preventDefault();
     const { name, value } = event.target;
+
+    // Get Todays date
     let TODAY = new Date().toISOString().slice(0, 10);
+
+    // Get Valid Date to meet age requirement
     let validAge = new Date(
       new Date(TODAY).getFullYear() -
         18 +
