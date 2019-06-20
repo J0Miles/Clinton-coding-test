@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 import './Form.css';
 
@@ -27,7 +28,6 @@ class Form extends Component {
     super(props);
 
     this.state = {
-      step: 1,
       id: '',
       firstName: null,
       lastName: null,
@@ -102,33 +102,14 @@ class Form extends Component {
         })
         .then(res => {
           this.setState({ res });
+          alert('User Created');
         })
         .catch(error => {
           console.log(error);
         });
-
-      /* .then(res => res.json(this.state))
-        .then(json => {
-          this.setState({
-            data: json,
-            isLoaded: true
-          });
-        }); */
     } else {
       alert('Please make sure all fields are filled out correctly');
     }
-    /* if (formValid(this.state)) {
-      console.log(`
-      --SUBMITTING--
-      First Name: ${this.state.firstName}
-      Last Name: ${this.state.lastName}
-      Email: ${this.state.email}
-      jobTitle: ${this.state.jobTitle}
-      Birthday: ${this.state.birthday}
-      `);
-    } else {
-      console.error('FROM INVALID - DISPLAY ERROR MESSAGE');
-    } */
   };
 
   render() {

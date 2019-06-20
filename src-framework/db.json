@@ -15,6 +15,22 @@
       "email": "test@test.com",
       "jobTitle": "Tester",
       "birthday": "1901-01-01"
+    },
+    {
+      "firstName": "Clinton",
+      "lastName": "Clinton",
+      "email": "c@c.com",
+      "jobTitle": "Tester",
+      "birthday": "1993-06-15",
+      "id": 3
+    },
+    {
+      "firstName": "Test",
+      "lastName": "Tester",
+      "email": "test@test.com",
+      "jobTitle": "Tester",
+      "birthday": "1999-02-09",
+      "id": 4
     }
   ]
 }
