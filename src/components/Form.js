@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './Form.css';
 
 const emailRegex = RegExp(
@@ -13,7 +14,7 @@ const formValid = ({ formErrors, ...rest }) => {
     val.length > 0 && (valid = false);
   });
 
-  // Validate form was filled out
+  // Validate the form was filled out
   Object.values(rest).forEach(val => {
     val === null && (valid = false);
   });
@@ -26,6 +27,8 @@ class Form extends Component {
     super(props);
 
     this.state = {
+      step: 1,
+      id: '',
       firstName: null,
       lastName: null,
       email: null,
@@ -82,23 +85,50 @@ class Form extends Component {
         break;
     }
 
-    this.setState({ formErrors, [name]: value }, () => console.log(this.state));
+    this.setState({ formErrors, [name]: value }, () => {});
   };
 
   handleSubmit = event => {
     event.preventDefault();
 
     if (formValid(this.state)) {
+      axios
+        .post('http://localhost:3000/users', {
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          email: this.state.email,
+          jobTitle: this.state.jobTitle,
+          birthday: this.state.birthday
+        })
+        .then(res => {
+          this.setState({ res });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+      /* .then(res => res.json(this.state))
+        .then(json => {
+          this.setState({
+            data: json,
+            isLoaded: true
+          });
+        }); */
+    } else {
+      alert('Please make sure all fields are filled out correctly');
+    }
+    /* if (formValid(this.state)) {
       console.log(`
       --SUBMITTING--
       First Name: ${this.state.firstName}
       Last Name: ${this.state.lastName}
       Email: ${this.state.email}
+      jobTitle: ${this.state.jobTitle}
       Birthday: ${this.state.birthday}
       `);
     } else {
       console.error('FROM INVALID - DISPLAY ERROR MESSAGE');
-    }
+    } */
   };
 
   render() {
@@ -157,6 +187,7 @@ class Form extends Component {
                 type="text"
                 className=""
                 name="jobTitle"
+                onChange={this.handleChange}
                 placeholder="Job Title"
               />
             </div>

@@ -10,10 +10,10 @@
     },
     {
       "id": 2,
-      "firstName": "Jordan",
-      "lastName": "Miles",
+      "firstName": "Test",
+      "lastName": "Tester",
       "email": "test@test.com",
-      "jobTitle": "Developer",
+      "jobTitle": "Tester",
       "birthday": "1901-01-01"
     }
   ]
