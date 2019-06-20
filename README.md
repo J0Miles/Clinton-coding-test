@@ -1,6 +1,7 @@
 
 1. run json-server to setup fake database
 2. run `npm start` in `./src` folder to start app
+3. After creating account you can view the user data in `src-framerwork/db.json`
 
 ## Available Scripts
 
