@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Form.css';
+import moment from 'react-moment';
 
 const emailRegex = RegExp(
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -43,6 +44,17 @@ class Form extends Component {
   handleChange = event => {
     event.preventDefault();
     const { name, value } = event.target;
+    let TODAY = new Date().toISOString().slice(0, 10);
+    let validAge = new Date(
+      new Date(TODAY).getFullYear() -
+        18 +
+        '-' +
+        new Date(TODAY).getMonth() +
+        '-' +
+        new Date(TODAY).getDate()
+    )
+      .toISOString()
+      .slice(0, 10);
     let formErrors = this.state.formErrors;
 
     switch (name) {
@@ -61,7 +73,7 @@ class Form extends Component {
         break;
       case 'birthday':
         formErrors.birthday =
-          value.length < 3 ? 'Must be at least 18 years or older' : '';
+          value < validAge ? '' : 'Must be 18 Years or Older';
         break;
       default:
         break;
@@ -145,6 +157,7 @@ class Form extends Component {
                 placeholder="Job Title"
               />
             </div>
+
             <div className="birthday">
               <label htmlFor="birthday">Date of Birth</label>
               <input
