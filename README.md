@@ -1,4 +1,6 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+1. run json-server to setup fake database
+2. run `npm start` in `./src` folder to start app
 
 ## Available Scripts
 
